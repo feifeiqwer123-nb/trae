@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gomoku - 五子棋</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="glass-panel">
+            <h1>Gomoku</h1>
+            <div class="status-indicator">
+                <div class="player-turn" id="turn-indicator">
+                    <span class="stone-preview black" id="stone-preview"></span>
+                    <span id="turn-text">黑方回合</span>
+                </div>
+            </div>
+            <button id="reset-btn" class="btn">重新开始</button>
+        </header>
+
+        <main class="board-container glass-panel">
+            <div id="board" class="board"></div>
+        </main>
+        
+        <div id="modal" class="modal hidden">
+            <div class="modal-content glass-panel">
+                <h2 id="winner-text">黑方获胜！</h2>
+                <button id="modal-reset-btn" class="btn primary-btn">再玩一次</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
