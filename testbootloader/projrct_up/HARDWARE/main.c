@@ -60,9 +60,10 @@ void SysTick_Handler(void)
 {
     SysTick_Time++;
 }
-
+	uint8_t i=0;
 int main(void)
 {
+
     SystemInit();
     SysTick_Config(SystemCoreClock / 1000); 
     UART1_Init(115200);
@@ -87,33 +88,39 @@ int main(void)
         // ==========================================
         // 核心逻辑 2：处理不足 2048 字节的“尾部数据”
         // ==========================================
-        if (RxCount > 0 && Need_Write_Flash == 0) 
-        {
-            // 如果 500ms 没收到新数据，认为电脑发完了
-            if ((SysTick_Time - Last_Rx_Time) > 500) 
-            {
-							  uicount_max++;
-                // 把最后剩余的数据写入 Flash
-                Flash_Write_Page(CurrentWriteAddr, RxBuffer, RxCount);
-                CurrentWriteAddr += RxCount; // 此时 CurrentWriteAddr 就是结束地址
-                
-                // ===== 在这里加入测试代码 =====
-                // 计算刚才存入 Flash 的文件总大小
-                uint32_t file_total_size = CurrentWriteAddr - USER_FLASH_START;
-                
-                // 延时一下，给点缓冲时间
-                for(volatile int d = 0; d < 1000000; d++); 
-                
-                // 调用新增的函数，把刚存进去的文件打包发出去！
-                Send_File_To_Another_STM32(USER_FLASH_START, file_total_size);
-                // ============================
-                
-                // 状态重置，准备接下一个文件
-                CurrentWriteAddr = USER_FLASH_START; // 这里我改成了复位到起始地址
-                RxCount = 0;
-                memset(RxBuffer, 0xFF, FLASH_PAGE_SIZE);
-            }
-        }
+//				if (RxCount > 0 && Need_Write_Flash == 0) 
+//				{
+//						// 如果 500ms 没收到新数据，认为电脑发完了
+//						if ((SysTick_Time - Last_Rx_Time) > 500) 
+//						{
+//								uicount_max++;
+//								// 把最后剩余的数据写入 Flash
+//								Flash_Write_Page(CurrentWriteAddr, RxBuffer, RxCount);
+//								CurrentWriteAddr += RxCount; // 此时 CurrentWriteAddr 就是结束地址
+//								
+//								// ===== 在这里加入测试代码 =====
+//								// 计算刚才存入 Flash 的文件总大小
+//								uint32_t file_total_size = CurrentWriteAddr - USER_FLASH_START;
+//								
+//								// 延时一下，给点缓冲时间
+//								for(volatile int d = 0; d < 1000000; d++); 
+//								
+//								// 调用新增的函数，把刚存进去的文件打包发出去！
+//								Send_File_To_Another_STM32(USER_FLASH_START, file_total_size);
+//								// ============================
+//								
+//								// 状态重置，准备接下一个文件
+//								CurrentWriteAddr = USER_FLASH_START; // 这里我改成了复位到起始地址
+//								RxCount = 0;
+//								memset(RxBuffer, 0xFF, FLASH_PAGE_SIZE);
+//						}
+//				}
+					
+					if(i==0)   
+					{
+						Send_File_To_Another_STM32(USER_FLASH_START, 58532);//58532
+						i=1;   
+					}
 
     }
 }

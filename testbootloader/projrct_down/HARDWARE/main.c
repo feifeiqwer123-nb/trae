@@ -25,7 +25,7 @@ int main(void)
         
         // 2. 超时判断机制 (例如设定为 2000 毫秒 = 2 秒)
         // 如果距离上一次成功解析出数据包，已经过去了 2 秒
-        if ((SysTick_Time - Last_Upgrade_Time) > 5000)
+        if ((SysTick_Time - Last_Upgrade_Time) > 50000)
         {
             // 说明发送端已经发完文件了，或者压根没打算发文件
             // 果断跳转去执行 App！
